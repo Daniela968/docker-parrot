@@ -28,8 +28,8 @@ RUN apt upgrade -y
 
 
 # Define arguments and environment variables
-ARG NGROK_TOKEN
-ARG Password
+ARG AUTH_TOKEN
+ARG PASSWORD
 
 # Install ssh, wget, and unzip
 RUN apt install ssh wget unzip -y > /dev/null 2>&1
