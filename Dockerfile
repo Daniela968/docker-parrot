@@ -26,7 +26,6 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN apt update
 RUN apt upgrade -y
 
-ENV LANG en_US.utf8
 
 # Define arguments and environment variables
 ARG NGROK_TOKEN
