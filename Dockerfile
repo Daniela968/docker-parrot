@@ -1,81 +1,18 @@
 FROM parrotsec/core
 
 
-a
-# Kali - Common packages
+#https://github.com/moby/moby/issues/27988
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
 
-RUN apt -y install amap \
-    apktool \
-    arjun \
-    beef-xss \
-    binwalk \
-    cri-tools \
-    dex2jar \
-    dirb \
-    exploitdb \
-    kali-tools-top10 \
-    kubernetes-helm \
-    lsof \
-    ltrace \
-    man-db \
-    nikto \
-    set \
-    steghide \
-    strace \
-    theharvester \
-    trufflehog \
-    uniscan \
-    wapiti \
-    whatmask \
-    wpscan \
-    xsser \
-    yara
+RUN apt-get update
+
+RUN apt-get install -y wget curl net-tools whois netcat-traditional pciutils bmon htop tor
 
 #Sets WORKDIR to /usr
 
 WORKDIR /usr
 
-# XSS-RECON
-
-RUN git clone https://github.com/Ak-wa/XSSRecon; 
-
-# Install language dependencies
-
-RUN apt -y install python3-pip npm nodejs golang
-
-# PyEnv
-RUN apt install -y build-essential \
-    libssl-dev \
-    zlib1g-dev \
-    libbz2-dev \
-    libreadline-dev \
-    libsqlite3-dev \
-    llvm \
-    libncurses5-dev \
-    libncursesw5-dev \
-    xz-utils \
-    tk-dev \
-    libffi-dev \
-    liblzma-dev \
-    python3-openssl
-
-RUN curl https://pyenv.run | bash
-
-# Set-up necessary Env vars for PyEnv
-ENV PYENV_ROOT /root/.pyenv
-ENV PATH $PYENV_ROOT/shims:$PYENV_ROOT/bin:$PATH
-
-RUN pyenv install -v 3.7.16; pyenv install -v 3.8.15
-
-# GitHub Additional Tools
-
-# Blackbird
-# for usage: blackbird/
-# python blackbird.py
-RUN git clone https://github.com/p1ngul1n0/blackbird && cd blackbird && pyenv local 3.8.15 && pip install -r requirements.txt && cd ../
-
-# Maigret
-RUN git clone https://github.com/soxoj/maigret.git && pyenv local 3.8.15 && pip3 install maigret && cd ../
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Sherlock
 # https://github.com/sherlock-project/sherlock
@@ -120,9 +57,6 @@ ENV USER=${USER}
 RUN chmod 755 /kali.sh
 RUN /kali.sh
 
-COPY /root /
 
-# ports and volumes
-EXPOSE 3000
 VOLUME /config
 
