@@ -10,7 +10,7 @@ RUN apt-get install -y wget curl net-tools whois netcat-traditional pciutils bmo
 
 #Sets WORKDIR to /usr
 
-WORKDIR /usr
+WORKDIR /  ROOT
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
@@ -20,7 +20,6 @@ RUN pip install sherlock-project
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
-COPY docker-entrypoint.sh /
 
 COPY conf/proxychains.conf /etc/proxychains.conf
 
