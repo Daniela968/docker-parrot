@@ -31,8 +31,6 @@ ENV LANG en_US.utf8
 # Define arguments and environment variables
 ARG NGROK_TOKEN
 ARG Password
-ENV Password=${Password}
-ENV NGROK_TOKEN=${NGROK_TOKEN}
 
 # Install ssh, wget, and unzip
 RUN apt install ssh wget unzip -y > /dev/null 2>&1
