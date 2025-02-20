@@ -1,5 +1,17 @@
-# sd
-FROM parrotsec/core:rolling
+FROM parrotsec/security
+
+#https://github.com/moby/moby/issues/27988
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+
+RUN apt-get update
+
+RUN apt-get install -y wget curl net-tools whois netcat-traditional pciutils bmon htop tor
+
+#Sets WORKDIR to /usr
+
+WORKDIR /usr
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 #MAINTAINER Lorenzo "Palinuro" Faletra (palinuro@linux.it)
 ENV DEBIAN_FRONTEND noninteractive
 ENV VERSION 4.8-1
@@ -36,7 +48,7 @@ RUN service ssh start
 RUN chmod 755 /kali.sh
 
 # Expose port
-EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306
+EXPOSE 80 8888 8080 22 443 5130 5131 5132 5133 5134 5135 3306
 
 # Start the shell script on container startup
 CMD  /kali.sh
