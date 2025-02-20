@@ -24,7 +24,6 @@ COPY docker-entrypoint.sh /
 
 COPY conf/proxychains.conf /etc/proxychains.conf
 
-ENTRYPOINT ["/docker-entrypoint.sh"]
 
 
 # prevent interactive prompts
@@ -59,4 +58,4 @@ RUN /kali.sh
 
 
 VOLUME /config
-
+EXPOSE 3000
