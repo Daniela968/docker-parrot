@@ -47,4 +47,3 @@ CMD  /start
 
 VOLUME /config
 EXPOSE 3000
-RUN /bin/bash
