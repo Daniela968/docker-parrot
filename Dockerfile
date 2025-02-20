@@ -12,17 +12,11 @@ RUN apt-get install -y wget curl net-tools whois netcat-traditional pciutils bmo
 
 WORKDIR /  ROOT
 
-RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Sherlock
 # https://github.com/sherlock-project/sherlock
-RUN pip install sherlock-project
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/*
-
-
-COPY conf/proxychains.conf /etc/proxychains.conf
-
 
 
 # prevent interactive prompts
