@@ -6,7 +6,7 @@ RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selectio
 
 RUN apt-get update
 
-RUN apt-get install -y wget curl net-tools whois netcat-traditional pciutils bmon htop tor
+RUN apt-get install -y wget curl net-tools unzip ssh  whois netcat-traditional pciutils bmon htop tor
 
 #Sets WORKDIR to /usr
 
