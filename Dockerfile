@@ -30,20 +30,19 @@ RUN apt upgrade -y
 # Define arguments and environment variables
 ARG AUTH_TOKEN
 ARG PASSWORD
-
-# Install ssh, wget, and unzip
-RUN apt install ssh wget unzip -y > /dev/null 2>&1
-# Download and unzip ngrok
-RUN wget -O ngrok.zip https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.zip > /dev/null 2>&1
+RUN wget -O ngrok.zip https://bin.equinox.io/c/bNyj1mQVY4c/ngrok-v3-stable-linux-amd64.zip
 RUN unzip ngrok.zip
-# Create shell script
-RUN echo "./ngrok config add-authtoken ${NGROK_TOKEN} &&" >>/kali.sh
-RUN echo "./ngrok tcp 5900 &>/dev/null &" >>/kali.sh
-
-
-
-RUN chmod 755 /kali.sh
-RUN /kali.sh
+RUN echo "./ngrok config add-authtoken ${NGROK_TOKEN} &&" >>/start
+RUN echo "./ngrok tcp --region ap 22 &>/dev/null &" >>/start
+RUN mkdir /run/sshd
+RUN echo '/usr/sbin/sshd -D' >>/start
+RUN echo 'PermitRootLogin yes' >>  /etc/ssh/sshd_config 
+RUN echo "PasswordAuthentication yes" >> /etc/ssh/sshd_config
+RUN echo root:kaal|chpasswd
+RUN service ssh start
+RUN chmod 755 /start
+EXPOSE 80 8888 8080 443 5130 5131 5132 5133 5134 5135 3306
+CMD  /start
 
 
 VOLUME /config
