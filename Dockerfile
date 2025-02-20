@@ -1,4 +1,17 @@
-FROM kalilinux/kali-rolling
+FROM parrotsec/core
+
+#https://github.com/moby/moby/issues/27988
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+
+RUN apt-get update
+
+RUN apt-get install -y wget curl net-tools whois netcat-traditional pciutils bmon htop tor
+
+#Sets WORKDIR to /usr
+
+WORKDIR /usr
+
+RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 #https://github.com/moby/moby/issues/27988
 RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
@@ -10,7 +23,7 @@ RUN apt-get update; apt-get install -y -q kali-linux-headless
 # Default packages
 
 RUN apt-get install -y wget curl net-tools whois netcat-traditional pciutils bmon htop tor
-
+a
 # Kali - Common packages
 
 RUN apt -y install amap \
